@@ -1,13 +1,6 @@
 pipeline {
     agent any
-    stages {
-        stage('Build') {
-            steps {
-                sh 'echo Building...'
-            }
-        }
-    }
-
+    
     environment {
         DOCKERHUB_USER = credentials('sathishdocker3011')   // Jenkins credential ID
         DOCKERHUB_PASS = credentials('Admin@123')   // Jenkins credential ID
