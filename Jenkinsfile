@@ -1,46 +1,29 @@
 pipeline {
     agent any
-    environment {
-        DOCKERHUB_USER = credentials('sathishdocker3011')
-        DOCKERHUB_PASS = credentials('Admin@123')
-        IMAGE_NAME = "trend-app"
-        DOCKER_REPO = "sathishdocker3011/trendstore"
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/sathishkumarnmca-source/Trend.git'
+                checkout scm
             }
         }
-
-        stage('Build Docker Image') {
+        stage('Build') {
             steps {
-                sh 'docker build -t $DOCKER_REPO:latest .'
+                sh 'docker build -t trendstore .'
             }
         }
-
-        stage('Push to DockerHub') {
+        stage('Push') {
             steps {
-                sh 'echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin'
-                sh 'docker push $DOCKER_REPO:latest'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    sh 'docker tag trendstore:latest sathishdocker3011/trendstore:latest'
+                    sh 'docker push sathishdocker3011/trendstore:latest'
+                }
             }
         }
-
-        stage('Deploy to EKS') {
+        stage('Deploy') {
             steps {
-                sh 'kubectl apply -f /deployment.yaml'
-                sh 'kubectl apply -f /service.yaml'
+                echo 'Deploy stage goes here'
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Deployment successful!'
-        }
-        failure {
-   echo 'Deployment failed. Check logs.'
         }
     }
 }
