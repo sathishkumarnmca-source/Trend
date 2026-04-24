@@ -84,7 +84,7 @@ resource "aws_security_group" "jenkins_sg" {
 # EC2 Instance with Jenkins
 resource "aws_instance" "jenkins" {
   ami                    = "ami-098e39bafa7e7303d"  # Amazon Linux 2 (update if needed)
-  instance_type           = "t3.small"
+  instance_type           = "m7i-flex.large"
   subnet_id               = aws_subnet.main_subnet.id
   vpc_security_group_ids  = [aws_security_group.jenkins_sg.id]
   key_name                = "Project"       # <-- your existing key pair
@@ -93,7 +93,6 @@ resource "aws_instance" "jenkins" {
   tags = {
     Name = "Jenkins-Server"
   }
-
   user_data = <<-EOF
               #!/bin/bash
               sudo yum update -y
