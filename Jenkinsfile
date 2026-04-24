@@ -4,12 +4,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t trend-app .'
+                sh 'docker build -t trendstore .'
             }
         }
         stage('Push') {
             steps {
-                sh 'docker push sathishdocker3011/trend-app:latest'
+                sh 'docker push sathishdocker3011/trendstore:latest'
             }
         }
         stage('Deploy') {
