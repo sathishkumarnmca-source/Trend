@@ -23,6 +23,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploy stage goes here'
+                sh 'kubectl apply -f deployment.yaml'
+                sh 'kubectl apply -f service.yaml'
+
             }
         }
     }
