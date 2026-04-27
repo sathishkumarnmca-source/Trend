@@ -87,7 +87,7 @@ resource "aws_instance" "jenkins" {
   instance_type           = "m7i-flex.large"
   subnet_id               = aws_subnet.main_subnet.id
   vpc_security_group_ids  = [aws_security_group.jenkins_sg.id]
-  key_name                = "Project"       # <-- your existing key pair
+  key_name                = "Trendstore"       # <-- your existing key pair
   associate_public_ip_address = true
 
   tags = {
