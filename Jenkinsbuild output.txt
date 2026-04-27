@@ -1,0 +1,161 @@
+Started by user sathishkumar
+Obtained Jenkinsfile from git https://github.com/sathishkumarnmca-source/Trend.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/Trendstore
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: git
+using credential dockerhub
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/Trendstore/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/sathishkumarnmca-source/Trend.git # timeout=10
+Fetching upstream changes from https://github.com/sathishkumarnmca-source/Trend.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.50.1'
+using GIT_ASKPASS to set credentials DockerHub Trendstore push
+ > git fetch --tags --force --progress -- https://github.com/sathishkumarnmca-source/Trend.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision a53dfc301724b814ca11369a13c7fce17e66d1e4 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f a53dfc301724b814ca11369a13c7fce17e66d1e4 # timeout=10
+Commit message: "Jenkins commit"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] checkout
+The recommended git tool is: git
+using credential dockerhub
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/Trendstore/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/sathishkumarnmca-source/Trend.git # timeout=10
+Fetching upstream changes from https://github.com/sathishkumarnmca-source/Trend.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.50.1'
+using GIT_ASKPASS to set credentials DockerHub Trendstore push
+ > git fetch --tags --force --progress -- https://github.com/sathishkumarnmca-source/Trend.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision a53dfc301724b814ca11369a13c7fce17e66d1e4 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f a53dfc301724b814ca11369a13c7fce17e66d1e4 # timeout=10
+Commit message: "Jenkins commit"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] sh
++ docker build -t trendstore .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 512B done
+#1 DONE 0.0s
+
+#2 [auth] library/node:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:18-alpine
+#3 DONE 0.2s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 8.02kB 0.0s done
+#6 DONE 0.0s
+
+#7 [3/6] COPY package*.json ./
+#7 CACHED
+
+#8 [5/6] COPY dist ./dist
+#8 CACHED
+
+#9 [2/6] WORKDIR /app
+#9 CACHED
+
+#10 [4/6] RUN npm install --production
+#10 CACHED
+
+#11 [6/6] RUN npm install -g serve
+#11 CACHED
+
+#12 exporting to image
+#12 exporting layers done
+#12 writing image sha256:5b6a84c25945d79d7d1ca0003752d9776d53486bdbfa0cab0ec21e754243375b done
+#12 naming to docker.io/library/trendstore done
+#12 DONE 0.0s
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push)
+[Pipeline] withCredentials
+Masking supported pattern matches of $DOCKER_PASS
+[Pipeline] {
+[Pipeline] sh
++ docker login -u sathishdocker3011 --password-stdin
++ echo ****
+WARNING! Your password will be stored unencrypted in /var/lib/jenkins/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+[Pipeline] sh
++ docker tag trendstore:latest sathishdocker3011/trendstore:latest
+[Pipeline] sh
++ docker push sathishdocker3011/trendstore:latest
+The push refers to repository [docker.io/sathishdocker3011/trendstore]
+1baaee932626: Preparing
+e24f45b2defa: Preparing
+7db7098eed9c: Preparing
+1aeea82213b3: Preparing
+392bd9868968: Preparing
+82140d9a70a7: Preparing
+f3b40b0cdb1c: Preparing
+0b1f26057bd0: Preparing
+08000c18d16d: Preparing
+82140d9a70a7: Waiting
+f3b40b0cdb1c: Waiting
+0b1f26057bd0: Waiting
+08000c18d16d: Waiting
+7db7098eed9c: Layer already exists
+1baaee932626: Layer already exists
+392bd9868968: Layer already exists
+1aeea82213b3: Layer already exists
+e24f45b2defa: Layer already exists
+82140d9a70a7: Layer already exists
+0b1f26057bd0: Layer already exists
+f3b40b0cdb1c: Layer already exists
+08000c18d16d: Layer already exists
+latest: digest: sha256:678f5c0ae5f744970829057102f137ce495e0e368a0a4c75e6b705c314d167a6 size: 2207
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] echo
+Deploy stage goes here
+[Pipeline] sh
++ kubectl apply -f deployment.yaml
+deployment.apps/trend-app unchanged
+[Pipeline] sh
++ kubectl apply -f service.yaml
+service/trend-service unchanged
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
